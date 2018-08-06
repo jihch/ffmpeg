@@ -1,0 +1,89 @@
+第一大部分:
+
+下载:
+http://ffmpeg.org/download.html
+
+得到:
+ffmpeg-4.0.2.tar.bz2
+
+上传至:
+/opt/badusoft/
+
+进入压缩包所在路径:
+cd /opt/badusoft/
+
+解压:
+tar -xjvf ffmpeg-4.0.2.tar.bz2
+
+进入解压后的路径:
+cd ffmpeg-4.0.2
+
+执行编译前的配置:
+./configure --enable-shared --prefix=/monchickey/ffmpeg
+这个时候可能会提示:"nasm/yasm not found or too old. Use --disable-x86asm for a crippled build."
+这个时候就需要进行第二大部分，然后再回来进行编译前的配置这一步；
+如果这没有任何异常提示，可直接进入第三大部分
+
+第二大部分:
+因为ffmpeg为了提高效率使用了汇编指令,所以为了 编译 ffmpeg的源代码还需要 安装 汇编编译器yasm
+
+下载:
+       wget  http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
+
+       解压:
+       tar zxvf yasm-1.3.0.tar.gz
+
+      切换路径： 
+      cd yasm-1.3.0
+
+      执行配置： 
+      ./configure
+
+      编译：
+      make
+
+      安装：
+      make install
+
+    
+      第三大部分
+
+      在 ffmpeg 路径下:
+     
+      编译:
+      make
+
+      安装:
+      make install
+
+
+      第四大部分:
+   
+设置 ffmpeg 要使用到的 环境变量:
+vim /etc/ld.so.conf.d/ffmpeg.conf
+/opt/badusoft/ffmpeg-4.0.2/libavdevice/
+/opt/badusoft/ffmpeg-4.0.2/libavfilter/
+/opt/badusoft/ffmpeg-4.0.2/libavformat/
+/opt/badusoft/ffmpeg-4.0.2/libavcodec/
+/opt/badusoft/ffmpeg-4.0.2/libavresample/
+/opt/badusoft/ffmpeg-4.0.2/libswresample/
+/opt/badusoft/ffmpeg-4.0.2/libswscale/
+/opt/badusoft/ffmpeg-4.0.2/libavutil/
+
+重新加载环境变量配置:
+ldconfig
+
+查看安装是否成功:
+[root@localhost ffmpeg-4.0.2]# ./ffmpeg -version
+ffmpeg version 4.0.2 Copyright (c) 2000-2018 the FFmpeg developers
+built with gcc 4.8.5 (GCC) 20150623 (Red Hat 4.8.5-28)
+configuration: --enable-shared --prefix=/monchickey/ffmpeg
+libavutil      56. 14.100 / 56. 14.100
+libavcodec     58. 18.100 / 58. 18.100
+libavformat    58. 12.100 / 58. 12.100
+libavdevice    58.  3.100 / 58.  3.100
+libavfilter     7. 16.100 /  7. 16.100
+libswscale      5.  1.100 /  5.  1.100
+libswresample   3.  1.100 /  3.  1.100
+
+ok!
