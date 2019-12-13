@@ -47,3 +47,30 @@ file 15.mp4
 file 16.mp4
 file 17.mp4
 ```
+
+
+
+设置输出文件的视频比特率（video bitrate）到 64 kbit/s：
+
+```shell
+ffmpeg -i input.avi -b:v 64k output.avi
+```
+
+
+
+强制输出文件的帧率(frame rate)到 24fps：
+
+```shell
+ffmpeg -i input.avi -r 24 output.avi
+```
+
+
+
+强制输入文件的帧率到 1 fps 且 强制 输出文件的帧率 到 24 fps：
+
+```shell
+ffmpeg -r 1 -i input.m2v -r 24 output.avi
+```
+
+
+
