@@ -21,7 +21,7 @@ ffmpeg -loop 1 -i bmp.bmp -vf scale=out_color_matrix=bt709 -color_primaries 1 -c
 
 视频合并
 
-```
+```shell
 ffmpeg -f concat -i list.txt -c copy concat.mp4
 ```
 
@@ -75,4 +75,4 @@ ffmpeg -r 1 -i input.m2v -r 24 output.avi
 ts合并：
 ```shell
 copy /b D:\input1.ts+D:\input2.ts+D:\input3.ts output.ts
-```shell
+```
