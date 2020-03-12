@@ -72,5 +72,5 @@ ffmpeg -i input.avi -r 24 output.avi
 ffmpeg -r 1 -i input.m2v -r 24 output.avi
 ```
 
-
-
+ts合并
+copy /b D:\input1.ts+D:\input2.ts+D:\input3.ts output.ts
