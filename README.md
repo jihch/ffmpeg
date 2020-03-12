@@ -21,7 +21,7 @@ ffmpeg -loop 1 -i bmp.bmp -vf scale=out_color_matrix=bt709 -color_primaries 1 -c
 
 视频合并
 
-```shell
+```
 ffmpeg -f concat -i list.txt -c copy concat.mp4
 ```
 
