@@ -79,3 +79,61 @@ ts合并：
 ```shell
 copy /b D:\input1.ts+D:\input2.ts+D:\input3.ts output.ts
 ```
+
+
+
+## Example
+
+比如
+
+```shell
+ffmpeg -ss 0 -t 10 -i test.rmvb test0.mp4
+```
+
+这就是指定了 test.rmvb 文件作为 input file，指定 start time 0s 开始，截取 10s, 创建并输出到 test0.mp4 这个文件。
+
+但是上面这个命令它没有说的是 默认转到 .mp4 文件 音频编码将使用 aac（LC）, 视频编码将使用 h264（High）
+
+仔细找，能在控制台里找到下面这样的内容
+
+```shell
+Stream mapping:
+  Stream #0:1 -> #0:0 (rv40 (native) -> h264 (libx264))
+  Stream #0:0 -> #0:1 (cook (native) -> aac (native))
+```
+
+就说明了 音视频转换时的映射关系。
+
+
+
+如果输入文件音视频编解码和 目标音视频编解码一致，那么可以尝试仅转换多媒体文件的封装格式，这样转化速度会非常快！
+
+`ffmpeg -i movie.avi -c copy -map 0 output.mp4`
+
+-c 等同于 -codec 用来指定编解码器
+
+
+
+## TS转MP4
+
+先将TS文件按顺序追加合并
+
+```shell
+copy /b 675b4a4a207000000.ts+675b4a4a207000001.ts+675b4a4a207000002.ts 7.ts
+```
+
+
+
+ts 文件转 mp4 时，需要注意：
+
+```shell
+ffmpeg -y -i 7.ts -c:v libx264 -c:a copy -bsf:a aac_adtstoasc 7.mp4
+```
+
+-y 指定了覆盖重名文件时不进行询问
+
+-c:v libx264 指定了视频编解码器使用 标准H264
+
+-c:a copy 指定了音频编解码器直接复制输入文件
+
+-bsf:a aac_adtstoasc 指定了使用比特流过滤器 aac_adtstoasc，这个过滤器就是用于 转ts文件到mp4文件的，因为 ts文件和mp4结构不同，ts文件，原名 MPEG2-TS 格式，它的特点就是 视频流的任一片段开始都独立解码，需要把每一个片段的 带的ADTS流抽出来，原理机制见 https://blog.csdn.net/weiyuefei/article/details/68067944
