@@ -137,3 +137,13 @@ ffmpeg -y -i 7.ts -c:v libx264 -c:a copy -bsf:a aac_adtstoasc 7.mp4
 -c:a copy 指定了音频编解码器直接复制输入文件
 
 -bsf:a aac_adtstoasc 指定了使用比特流过滤器 aac_adtstoasc，这个过滤器就是用于 转ts文件到mp4文件的，因为 ts文件和mp4结构不同，ts文件，原名 MPEG2-TS 格式，它的特点就是 视频流的任一片段开始都独立解码，需要把每一个片段的 带的ADTS流抽出来，原理机制见 https://blog.csdn.net/weiyuefei/article/details/68067944
+
+
+
+## 转码mp4文件时，指定 音频编解码器 为AAC（Chrome浏览器可直接播放）
+
+```shell
+ffmpeg -i 半路枪手.mp4 -c:v copy -c:a aac 半路枪手_aac.mp4
+```
+
+指定了行为是：编解码对于视频流，进行复制，然后对于音频流的编解码使用 AAC
