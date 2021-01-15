@@ -147,3 +147,12 @@ ffmpeg -i 半路枪手.mp4 -c:v copy -c:a aac 半路枪手_aac.mp4
 ```
 
 指定了行为是：编解码对于视频流，进行复制，然后对于音频流的编解码使用 AAC
+
+
+
+ffmpeg 下载m3u8
+
+```shell
+ffmpeg -i https://video.twimg.com/ext_tw_video/1143530317296406529/pu/pl/720x720/69ZLvxR5w_0y7mVj.m3u8 demo.mp4
+```
+
