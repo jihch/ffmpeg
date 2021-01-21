@@ -164,3 +164,13 @@ ffmpeg -i https://video.twimg.com/ext_tw_video/1143530317296406529/pu/pl/720x720
 ffprobe -show_streams demo.mp4
 ```
 
+
+
+使用**ffplay**播放音频文件(波形图)
+
+```shell
+ffplay -i demo.mp3 -showmode 1
+```
+
+
+
