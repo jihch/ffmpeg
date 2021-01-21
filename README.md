@@ -156,3 +156,11 @@ ffmpeg 下载m3u8
 ffmpeg -i https://video.twimg.com/ext_tw_video/1143530317296406529/pu/pl/720x720/69ZLvxR5w_0y7mVj.m3u8 demo.mp4
 ```
 
+
+
+使用**ffprobe**查看文件流信息
+
+```shell
+ffprobe -show_streams demo.mp4
+```
+
