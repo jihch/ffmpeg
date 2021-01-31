@@ -3,7 +3,8 @@ linux 上 安装 ffmpeg
 
 
 
-按起止时间切割媒体文件
+# 按起止时间切割媒体文件
+
 ```
 ffmpeg -ss 0 -t 10 -i test.rmvb test.mp4
 ```
@@ -14,7 +15,11 @@ ffmpeg -ss 0:0:00 -t 0:30:00 -i input.mp4 -vcodec copy -acodec copy output.mp4
 
 
 
-图片转视频
+
+
+
+
+# 图片转视频
 
 ```
 ffmpeg -loop 1 -i bmp.bmp -vf scale=out_color_matrix=bt709 -color_primaries 1 -color_trc 1 -colorspace 1 -t 30 -pix_fmt yuv420p -y -report bmp.mp4
@@ -22,7 +27,11 @@ ffmpeg -loop 1 -i bmp.bmp -vf scale=out_color_matrix=bt709 -color_primaries 1 -c
 
 
 
-视频合并
+
+
+
+
+# 相同参数的视频文件合并
 
 ```shell
 ffmpeg -f concat -i list.txt -c copy concat.mp4
@@ -53,32 +62,63 @@ file 17.mp4
 
 
 
-设置输出文件的视频比特率（video bitrate）到 64 kbit/s：
+
+
+
+
+# 不同参数视频文件的合并（帧宽度、帧高度、帧速率）
+
+```shell
+ffmpeg -i 1_264.mp4 -i 2_264.mp4 -filter_complex "[0:v] [0:a] [1:v] [1:a] concat=n=2:v=1:a=1 [v] [a]" -map "[v]" -map "[a]" output.mp4
+```
+
+将1_264.mp4 和 2_264.mp4 合并为 output.mp4
+
+
+
+
+
+
+
+# 指定输出文件的视频比特率
 
 ```shell
 ffmpeg -i input.avi -b:v 64k output.avi
 ```
 
+设置输出文件的视频比特率（video bitrate）到 64 kbit/s
 
 
-强制输出文件的帧率(frame rate)到 24fps：
+
+
+
+
+
+# 指定输出文件的帧率
 
 ```shell
 ffmpeg -i input.avi -r 24 output.avi
 ```
 
+强制输出文件的帧率(frame rate)到 24fps
 
 
-强制输入文件的帧率到 1 fps 且 强制 输出文件的帧率 到 24 fps：
+
+
+
+
+
+# 指定输入文件帧率和输出文件帧率
 
 ```shell
 ffmpeg -r 1 -i input.m2v -r 24 output.avi
 ```
 
-ts合并：
-```shell
-copy /b D:\input1.ts+D:\input2.ts+D:\input3.ts output.ts
-```
+强制输入文件的帧率到 1 fps 且 强制 输出文件的帧率 到 24 fps
+
+
+
+
 
 
 
@@ -114,9 +154,11 @@ Stream mapping:
 
 
 
-## TS转MP4
 
-先将TS文件按顺序追加合并
+
+
+
+# TS文件合并
 
 ```shell
 copy /b 675b4a4a207000000.ts+675b4a4a207000001.ts+675b4a4a207000002.ts 7.ts
@@ -124,11 +166,17 @@ copy /b 675b4a4a207000000.ts+675b4a4a207000001.ts+675b4a4a207000002.ts 7.ts
 
 
 
-ts 文件转 mp4 时，需要注意：
+
+
+
+
+# TS文件指定视频编解码器、复制音频流转mp4
 
 ```shell
 ffmpeg -y -i 7.ts -c:v libx264 -c:a copy -bsf:a aac_adtstoasc 7.mp4
 ```
+
+ts 文件转 mp4 时，需要注意：
 
 -y 指定了覆盖重名文件时不进行询问
 
@@ -137,6 +185,10 @@ ffmpeg -y -i 7.ts -c:v libx264 -c:a copy -bsf:a aac_adtstoasc 7.mp4
 -c:a copy 指定了音频编解码器直接复制输入文件
 
 -bsf:a aac_adtstoasc 指定了使用比特流过滤器 aac_adtstoasc，这个过滤器就是用于 转ts文件到mp4文件的，因为 ts文件和mp4结构不同，ts文件，原名 MPEG2-TS 格式，它的特点就是 视频流的任一片段开始都独立解码，需要把每一个片段的 带的ADTS流抽出来，原理机制见 https://blog.csdn.net/weiyuefei/article/details/68067944
+
+
+
+
 
 
 
@@ -150,7 +202,11 @@ ffmpeg -i 半路枪手.mp4 -c:v copy -c:a aac 半路枪手_aac.mp4
 
 
 
-ffmpeg 下载m3u8
+
+
+
+
+# ffmpeg 下载m3u8
 
 ```shell
 ffmpeg -i https://video.twimg.com/ext_tw_video/1143530317296406529/pu/pl/720x720/69ZLvxR5w_0y7mVj.m3u8 demo.mp4
@@ -158,7 +214,11 @@ ffmpeg -i https://video.twimg.com/ext_tw_video/1143530317296406529/pu/pl/720x720
 
 
 
-使用**ffprobe**查看文件流信息
+
+
+
+
+# 使用**ffprobe**查看文件流信息
 
 ```shell
 ffprobe -show_streams demo.mp4
@@ -166,7 +226,11 @@ ffprobe -show_streams demo.mp4
 
 
 
-使用**ffplay**播放音频文件(波形图)
+
+
+
+
+# 使用**ffplay**播放音频文件(波形图)
 
 ```shell
 ffplay -i demo.mp3 -showmode 1
