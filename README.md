@@ -238,3 +238,30 @@ ffplay -i demo.mp3 -showmode 1
 
 
 
+
+
+# 显示可用的硬件加速方法
+
+```shell
+ffmpeg -hwaccels
+```
+
+
+
+
+
+# Windows 下使用显卡（CUDA-nvidia）加速
+
+```shell
+ffmpeg -hwaccel cuvid -c:v h264_cuvid -i input.mp4 -c:v h264_nvenc -y output.mp4
+```
+
+先解码源文件，在编码输出文件
+
+-hwaccel cuvid 指定使用的硬件加速方法
+
+-c:v h264_cuvid 指定解码器
+
+-c:v h264_nvenc 指定编码器
+
+注：会比CPU输出的文件大，质量稍差（人眼很难区分）
