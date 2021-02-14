@@ -265,3 +265,15 @@ ffmpeg -hwaccel cuvid -c:v h264_cuvid -i input.mp4 -c:v h264_nvenc -y output.mp4
 -c:v h264_nvenc 指定编码器
 
 注：会比CPU输出的文件大，质量稍差（人眼很难区分）
+
+
+
+
+
+# 转封装
+
+```shell
+ffmpeg -i input.mkv -c copy output.mp4
+```
+
+在源文件内部编码器与目标输出文件编码器一致的前提下，可以只转换封装格式，这样处理转换速度非常快、非常高效
