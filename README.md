@@ -277,3 +277,14 @@ ffmpeg -i input.mkv -c copy output.mp4
 ```
 
 在源文件内部编码器与目标输出文件编码器一致的前提下，可以只转换封装格式，这样处理转换速度非常快、非常高效
+
+
+
+# RMVB转mp4
+
+指定视频解码器为 rv40，视频编码器为英伟达GPU mp4编码器
+
+```shell
+ffmpeg -hwaccel cuvid -c:v rv40 -i 魔发奇缘.rmvb -c:v h264_nvenc -y 魔发奇缘.mp4
+```
+
